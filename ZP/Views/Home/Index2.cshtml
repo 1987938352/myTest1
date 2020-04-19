@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "Index2";
+}
+@model List<UserDTO>
+<h1>Index2</h1>
+
+@foreach (var userDTO in Model)
+{
+    <tr><th></th><th></th><th></th></tr>
+    <tr><td>@userDTO.Id</td><td>@userDTO.Name</td><td>@userDTO.Email</td></tr>
+}

@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <form id="myFrom">
+        Email<input type="text" name="Email" /><br />
+        密码 <input type="text" name="PassWord" /><br />
+        <input type="text" name="VerfiyCode" value="请填写验证码" /><span><img src="~/Main/CreateVerifyCode" id="verfiyCode" /></span><a href="javascript:void(0);" id="verfiyCodeTxt">看不清/换一张</a>
+        <br />
+        <input type="button" id="btnRegister" value="登录" />
+        
+    </form>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+            function verfiyCodeChange() {
+                $("#verfiyCode").attr("src", "/Main/CreateVerifyCode?Lo=" + Math.random());
+            }
+            verfiyCodeChange();
+            $("#verfiyCode,#verfiyCodeTxt").click(
+                function () {
+                    verfiyCodeChange();
+                })
+            $("#btnRegister").click(
+                function () {
+                    var formData = $("#myFrom").serializeArray();
+                    $.ajax({
+                        url: "/Main/LoginCheck",
+                         type: "post",
+                        dataType: "json",
+                        data: formData,
+                        success: function (data) {
+                            if (data.status == "ok") {
+                                alert("登录成功");
+                            }
+                            else {
+                                alert("登录失败")
+                            }
+                        },
+                        error: function () {
+                            alert("连接失败")
+                        }
+                    })
+                }
+            )
+        })
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,41 @@
+﻿@model QiNiuPicViewModel
+@{
+    ViewData["Title"] = "OtherHome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>OtherHome</h1>
+<div>
+    <input type="hidden"  id="Hid" value="@Model.Id"/>
+    <h1 >@Model.Id</h1>
+    <img src=@Model.Url />
+    <button id="Add">投票</button> 
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#Add").click(function () {
+                var Id = $("#Hid").val();
+                $.ajax({
+                    url: "/User/TouPiao",
+                    type: "post",
+                    dataType: "json",
+                    data: { PicId: Id },
+                    success: function (data) {
+                        if (data.status == "ok") {
+                            alert("点赞成功");
+                        }
+                        else {
+                            alert(data.errorMsg);
+                        }
+                    },
+                    error: function () {
+                        alert("连接错误");
+                    }
+                })
+            })
+        })
+    </script>
+
+}

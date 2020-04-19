@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        alert("aa");
+        $(function () {
+
+            $("#btnRedis").click(function () {
+                var str = $("#txt").val();
+                changeReidsAjax(str);
+            });
+        });
+        function changeReidsAjax(str) {
+            $.ajax({
+                url: "~/Test/ChangeRedis",
+                type="post",
+                dataType="json",
+                data={ text: str },
+                success: function myfunction(data) {
+                    if (data == "ok") {
+                        $("#txt").val("");
+                    }
+                    else {
+                        alert("error");
+                    }
+                },
+                error: function () {
+                    alert("error2");
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="txt" />
+    <input type="button" id="btnRedis" value="redis" />
+
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿@model List<long>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+   
+</head>
+<body>
+    @foreach (var Id in Model)
+    {
+        <span><a href="/User/OtherHome?Id=@Id">@Id</a></span>
+    }
+    @{
+        var pager = new Common.Pages();
+        pager.CurrentPageClassName = "curPager";
+        pager.MaxPageCount = 10;
+        pager.PageIndex = (int)ViewBag.pageIndex;
+        pager.PageSize = 5;
+        pager.TotalCount = (int)ViewBag.totalCount;
+        pager.UrlPattern = "/Main/Admin?pageIndex={pn}";
+    }
+</body>
+</html>

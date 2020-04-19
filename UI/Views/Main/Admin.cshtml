@@ -1,0 +1,54 @@
+﻿@model UserDTO[]
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin</h1>
+
+<tr><th>Id</th><th>Name</th><th>Email</th><th>PassWord</th><th>软删除</th></tr>
+@foreach (var user in Model)
+{
+    <tr><td>@user.Id</td><td>@user.Name</td><td>@user.Email</td><td>@user.PassWord</td><td><a href="javascript:void(0)" class="delete" did="@user.Id">软删除</a></td></tr>
+}
+@{ 
+    var pager = new Common.Pages();
+    pager.CurrentPageClassName = "curPager";
+    pager.MaxPageCount = 10;
+    pager.PageIndex = (int)ViewBag.pageIndex;//这些数据，cshtml不知道，就必须让Action传递给我们
+                                             //对于所有cshtml要用到，但是又获取不到的数据，都由Action来获取，然后放到ViewBag或者Model中传递给cshtml
+    pager.PageSize = 10;
+    pager.TotalCount = (int)ViewBag.totalCount;
+    pager.UrlPattern = "/Main/Admin?pageIndex={pn}";
+}
+@section Scripts{ 
+<script>
+    $(function () {
+        $(".delete").click(
+            function () {
+                var tdDelete = $(this);
+                var did = tdDelete.attr("did");
+                alert("cw");
+               
+                $.ajax({
+                    url: "/Main/DeleteById",
+                    type: "post",
+                    dataType: "json",
+                    data: { Id: did },
+                    success: function (data) {
+                        if (data.status = "ok") {
+                            alert("删除成功");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("删除失败");
+                        }
+                    },
+                    error: function () {
+                        alert("连接失败")
+                    }
+                })
+            })
+    })
+</script>
+}

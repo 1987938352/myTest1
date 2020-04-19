@@ -1,0 +1,41 @@
+﻿@model QiNiuPicViewModel
+@{
+    ViewData["Title"] = "MyHome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+   
+    <div>
+        <img src=@Model.Url />
+        
+        
+    </div>
+<div>
+    <form id="uploadForm">
+        AJAX上传多文件： <input type="file" name="file" multiple />
+        <input type="button" value="上传" onclick="doUpload()" />
+    </form>
+</div>
+
+
+@section Scripts{
+    <script>
+        function doUpload() {
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url: '/User/UploadPic',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                window.location.reload();
+            },
+            error: function (returndata) {
+                alert("连接失败");
+            }
+        });
+        }
+    </script>
+}
