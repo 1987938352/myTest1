@@ -22,7 +22,7 @@ namespace UI.Controllers
         public async Task<IActionResult> ChangeRedis(string text)
         {
             string status = await userService.SerRedisAsync(text) ? "ok" : "error";
-            int a =2;
+            int a =3;
             return Json(new AjaxResult() { Status = status });
         }
 
